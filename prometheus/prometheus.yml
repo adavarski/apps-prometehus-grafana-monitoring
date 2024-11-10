@@ -1,0 +1,15 @@
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+  - job_name: "node-express"
+    static_configs:
+      - targets: ["node-express:3000"]
+
+  - job_name: "python-flask"
+    static_configs:
+      - targets: ["python-flask:8000"]
+
+  - job_name: "go-fiber"
+    static_configs:
+      - targets: ["go-fiber:9000"]

@@ -1,0 +1,47 @@
+services:
+  node-express:
+    build: ./services/node-express
+    ports:
+      - 3000:3000
+
+  python-flask:
+    build: ./services/python-flask
+    # flask requires SIGINT to stop gracefully
+    # (default stop signal from Compose is SIGTERM)
+    stop_signal: SIGINT
+    ports:
+      - 8000:8000
+
+  go-fiber:
+    build: ./services/go-fiber
+    ports:
+      - "9000:9000"
+
+  traffic-generator:
+    build: ./services/traffic-generator
+    depends_on:
+      - node-express
+      - python-flask
+      - go-fiber
+    environment:
+      - SERVICE_URLS=http://node-express:3000,http://python-flask:8000,http://go-fiber:9000
+
+  prometheus:
+    image: prom/prometheus
+    ports:
+      - 9090:9090
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+
+  grafana:
+    # default credentials: admin/admin
+    image: grafana/grafana
+    ports:
+      - 3001:3000
+    volumes:
+      - ./grafana/datasource.yml:/etc/grafana/provisioning/datasources/datasource.yml
+      - ./grafana/dashboard.json:/etc/grafana/provisioning/dashboards/dashboard.json
+    environment:
+      - GF_DASHBOARDS_DEFAULT_HOME_DASHBOARD_PATH=/etc/grafana/provisioning/dashboards/dashboard.json

@@ -1,0 +1,14 @@
+{
+  "name": "node-express",
+  "version": "1.0.0",
+  "description": "Node.js Express application with Prometheus metrics",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "type": "module",
+  "dependencies": {
+    "express": "^4.19.2",
+    "prom-client": "^15.1.3"
+  }
+}
