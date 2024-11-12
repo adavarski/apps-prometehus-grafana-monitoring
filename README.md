@@ -1,4 +1,8 @@
 
+## Example Go, Python, Node apps that exposes Prometheus metrics
+
+
+
 ### Docker Compose
 
 ```
@@ -36,7 +40,7 @@ kubectl port-forward svc/prometheus-operator-grafana -n monitoring 3000:80
 kubectl get secret -n monitoring  prometheus-operator-grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo
 prom-operator
 ````
-## Build & Push docker image
+#### Build & Push docker image
 ```
 in services apps directories
 
@@ -49,7 +53,7 @@ docker push davarski/python-flask:latest
 docker build -t davarski/traffic-generator:latest .
 docker push davarski/traffic-generator:latest
 ```
-### Deploy app and apply Prometheus Service Monitors
+#### Deploy app and apply Prometheus Service Monitors
 ```
 cd k8s-manifests
 kubectl apply -f deployment-go.yaml -f service-go.yaml 
