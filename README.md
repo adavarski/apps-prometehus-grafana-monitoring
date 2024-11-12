@@ -36,25 +36,40 @@ kubectl port-forward svc/prometheus-operator-grafana -n monitoring 3000:80
 kubectl get secret -n monitoring  prometheus-operator-grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo
 prom-operator
 ````
-#### Build & Push docker image
+## Build & Push docker image
 ```
-docker build -t davarski/go-mon:latest .
-docker login 
-docker push davarski/go-mon:latest
+in services apps directories
+
+docker build -t davarski/go-fiber:latest .
+docker push davarski/go-fiber:latest
+docker build -t davarski/node-express:latest .
+docker push davarski/node-express:latest
+docker build -t davarski/python-flask:latest .
+docker push davarski/python-flask:latest
+docker build -t davarski/traffic-generator:latest .
+docker push davarski/traffic-generator:latest
 ```
-##### Deploy apps and apply Prometheus Service Monitors
+### Deploy app and apply Prometheus Service Monitor
 ```
 cd k8s-manigest
-kubectl apply -f deployment-go.yaml -f service-go.yaml
-kubectl apply -f deployment-node.yaml -f service-node.yaml 
-kubectl apply -f deployment-python.yaml -f service-python.yaml 
-kubectl apply -f deployment-traffic-generator.yaml
-
-kubectl apply -f -f servicemonitor-go.yaml -n monitoring
-kubectl apply -f -f servicemonitor-node.yaml -n monitoring
-kubectl apply -f -f servicemonitor-python.yaml -n monitoring
+kubectl apply -f deployment.yaml -f service.yaml 
+kubectl apply -f -f servicemonitor.yaml -n monitoring
+kubectl port-forward svc/go-mon 8080:8080
+curl http://localhost:8080/metrics
 
 kubectl get servicemonitors -n monitoring
+
+kubectl logs traffic-generator-88f974f48-lfjgw
+Traffic generator started for services: ['http://node-express:3000', 'http://python-flask:8000', 'http://go-fiber:9000']
+Request to http://python-flask:8000: Status 200
+Request to http://node-express:3000: Status 200
+Request to http://node-express:3000: Status 200
+Request to http://node-express:3000: Status 200
+Request to http://python-flask:8000: Status 200
+Request to http://go-fiber:9000: Status 200
+Request to http://go-fiber:9000: Status 200
+
+
 ```
 ![Prometheus monitoring target](./pictures/prometheus-apps-targets.png)
 
