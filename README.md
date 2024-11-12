@@ -81,7 +81,7 @@ Request to http://go-fiber:9000: Status 200
 
 ![Prometheus monitoring graph](./pictures/prometheus-http-responce-graph.png)
 
-Create Graphana dashboard:
+Create new Grafana dashboard:
 
 ![Graphana Dashboard](./pictures/graphana-apps-http-responce-total.png)
 
