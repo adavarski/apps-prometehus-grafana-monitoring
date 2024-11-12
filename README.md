@@ -68,6 +68,11 @@ kubectl apply -f servicemonitor-python.yaml -n monitoring
 kubectl apply -f deployment-traffic-generator.yaml
 
 kubectl get servicemonitors -n monitoring
+NAME                                                 AGE
+go-fiber                                             88m
+node-express                                         87m
+python-flask                                         85m
+...
 
 kubectl logs traffic-generator-88f974f48-lfjgw
 Traffic generator started for services: ['http://node-express:3000', 'http://python-flask:8000', 'http://go-fiber:9000']
