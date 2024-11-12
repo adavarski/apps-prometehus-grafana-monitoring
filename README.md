@@ -53,13 +53,13 @@ docker push davarski/traffic-generator:latest
 ```
 cd k8s-manifest
 kubectl apply -f deployment-go.yaml -f service-go.yaml 
-kubectl apply -f -f servicemonitor.yaml -n monitoring
+kubectl apply -f servicemonitor.yaml -n monitoring
 
 kubectl apply -f deployment-node.yaml -f service-node.yaml 
-kubectl apply -f -f servicemonitor.yaml -n monitoring
+kubectl apply -f servicemonitor-node.yaml -n monitoring
 
 kubectl apply -f deployment-python.yaml -f service-python.yaml 
-kubectl apply -f -f servicemonitor.yaml -n monitoring
+kubectl apply -f servicemonitor-python.yaml -n monitoring
 
 kubectl apply -f deployment-traffic-generator.yaml
 
