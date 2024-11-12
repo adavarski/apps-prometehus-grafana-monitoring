@@ -49,13 +49,19 @@ docker push davarski/python-flask:latest
 docker build -t davarski/traffic-generator:latest .
 docker push davarski/traffic-generator:latest
 ```
-### Deploy app and apply Prometheus Service Monitor
+### Deploy app and apply Prometheus Service Monitors
 ```
 cd k8s-manigest
-kubectl apply -f deployment.yaml -f service.yaml 
+kubectl apply -f deployment-go.yaml -f service-go.yaml 
 kubectl apply -f -f servicemonitor.yaml -n monitoring
-kubectl port-forward svc/go-mon 8080:8080
-curl http://localhost:8080/metrics
+
+kubectl apply -f deployment-node.yaml -f service-node.yaml 
+kubectl apply -f -f servicemonitor.yaml -n monitoring
+
+kubectl apply -f deployment-python.yaml -f service-python.yaml 
+kubectl apply -f -f servicemonitor.yaml -n monitoring
+
+kubectl apply -f deployment-traffic-generator.yaml
 
 kubectl get servicemonitors -n monitoring
 
