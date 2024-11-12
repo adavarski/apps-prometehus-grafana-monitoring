@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: traffic-generator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: traffic-generator
+  template:
+    metadata:
+      labels:
+        app: traffic-generator
+    spec:
+      containers:
+      - name: traffic-generator
+        image: davarski/traffic-generator:latest
+        imagePullPolicy: Always
+        env:
+        - name: SERVICE_URLS
+          value: http://node-express:3000,http://python-flask:8000,http://go-fiber:9000
+      
+    

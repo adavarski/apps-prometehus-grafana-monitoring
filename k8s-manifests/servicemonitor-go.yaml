@@ -1,0 +1,19 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: go-fiber
+  labels:
+    team: frontend
+    release: prometheus
+    app: go-fiber
+spec:
+  selector:
+    matchLabels:
+      app: go-fiber
+  namespaceSelector:
+    any: true
+  endpoints:
+    - port: web
+      interval: 30s
+      path: /metrics
+

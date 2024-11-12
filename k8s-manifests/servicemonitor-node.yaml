@@ -1,0 +1,19 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: node-express
+  labels:
+    team: frontend
+    release: prometheus
+    app: node-express
+spec:
+  selector:
+    matchLabels:
+      app: node-express
+  namespaceSelector:
+    any: true
+  endpoints:
+    - port: web
+      interval: 30s
+      path: /metrics
+

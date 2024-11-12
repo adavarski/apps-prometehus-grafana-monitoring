@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: node-express
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: node-express
+  template:
+    metadata:
+      labels:
+        app: node-express
+    spec:
+      containers:
+      - name: node-express
+        image: davarski/node-express:latest
+        imagePullPolicy: Always
+        ports:
+        - name: web
+          containerPort: 3000
