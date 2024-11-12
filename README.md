@@ -51,7 +51,7 @@ docker push davarski/traffic-generator:latest
 ```
 ### Deploy app and apply Prometheus Service Monitors
 ```
-cd k8s-manifest
+cd k8s-manifests
 kubectl apply -f deployment-go.yaml -f service-go.yaml 
 kubectl apply -f servicemonitor.yaml -n monitoring
 
